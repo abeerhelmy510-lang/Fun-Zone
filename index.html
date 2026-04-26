@@ -3,124 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مركز ألعاب المبرمجة عبير</title>
+    <title>بوابة الألعاب العالمية</title>
     <style>
-        :root { --main-color: #ff4757; --sec-color: #2f3542; }
-        body { font-family: 'Cairo', sans-serif; background: #f1f2f6; margin: 0; padding: 20px; text-align: center; }
-        .header { background: var(--main-color); color: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .game-container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 20px; display: none; border: 2px solid #ddd; }
-        .active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #0b0e14; color: white; margin: 0; padding: 20px; }
+        h1 { text-align: center; color: #ff4757; font-size: 2.5em; text-shadow: 2px 2px #000; }
         
-        .menu-btn { padding: 12px 25px; margin: 5px; border: none; border-radius: 10px; cursor: pointer; background: var(--sec-color); color: white; font-weight: bold; transition: 0.3s; }
-        .menu-btn:hover { background: var(--main-color); transform: translateY(-3px); }
-        
-        input, button { padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin: 10px; font-family: inherit; }
-        .play-btn { background: #2ed573; color: white; border: none; font-weight: bold; cursor: pointer; }
-        
-        /* لعبة اضرب الرموز */
-        #game-area { height: 200px; position: relative; background: #dfe4ea; border-radius: 15px; overflow: hidden; cursor: crosshair; }
-        .target { font-size: 40px; position: absolute; cursor: pointer; user-select: none; }
-        
-        .footer { margin-top: 40px; color: #777; border-top: 1px solid #ddd; padding-top: 20px; }
-        .footer strong { color: var(--main-color); font-size: 1.2em; }
+        /* تصميم شبكة الألعاب */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* تصميم كرت اللعبة */
+        .game-card {
+            background: #1e272e;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .game-card:hover {
+            transform: scale(1.08);
+            border-color: #ff4757;
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .game-card h3 {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        /* حاوية اللعبة عند الفتح */
+        #game-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        iframe { width: 80%; height: 80%; border: 5px solid #fff; border-radius: 10px; }
+        .close-btn { margin-bottom: 10px; padding: 10px 20px; background: #ff4757; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>🎮 مركز ألعاب عبير حلمي 🎮</h1>
-    <p>اختاري اللعبة اللي تحبيها وابدأي التحدي!</p>
-</div>
+    <h1>🎮 Game Universe | عالم الألعاب 🎮</h1>
 
-<div class="nav">
-    <button class="menu-btn" onclick="showGame('guess')">🎲 تخمين الرقم</button>
-    <button class="menu-btn" onclick="showGame('clicker')">⚡ سرعة النقرات</button>
-    <button class="menu-btn" onclick="showGame('quiz')">💡 سؤال وجواب</button>
-</div>
+    <div class="game-grid">
+        <div class="game-card" onclick="openGame('https://www.google.com/logos/2010/pacman10-i.html')">
+            <img src="https://logodix.com/logo/18526.png" alt="Pacman">
+            <h3>باك مان الكلاسيكية</h3>
+        </div>
 
-<hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
+        <div class="game-card" onclick="openGame('https://playtictactoe.org/')">
+            <img src="https://play-lh.googleusercontent.com/399008889898.png" alt="XO">
+            <h3>لعبة التحدي XO</h3>
+        </div>
 
-<div id="guess" class="game-container active">
-    <h2>تخمين الرقم السري</h2>
-    <p>فكرت في رقم من 1 لـ 50.. هو كام؟</p>
-    <input type="number" id="guessInput" placeholder="اكتبي الرقم">
-    <button class="play-btn" onclick="guessGame()">تحقق</button>
-    <p id="guessMsg"></p>
-</div>
+        <div class="game-card" onclick="openGame('https://poki.com/en/g/temple-run-2')">
+            <img src="https://play-lh.googleusercontent.com/9998888.png" alt="Temple Run">
+            <h3>تمبل رن (Poki)</h3>
+        </div>
 
-<div id="clicker" class="game-container">
-    <h2>لعبة سرعة الرد ⚡</h2>
-    <p>اضربي الرموز اللي بتظهر بسرعة! النتيجة: <span id="score">0</span></p>
-    <button class="play-btn" onclick="startClickGame()">ابدأ اللعب</button>
-    <div id="game-area"></div>
-</div>
+        <div class="game-card" onclick="openGame('https://slither.io/')">
+            <img src="https://play-lh.googleusercontent.com/111222333.png" alt="Slither">
+            <h3>لعبة الثعبان Slither</h3>
+        </div>
+    </div>
 
-<div id="quiz" class="game-container">
-    <h2>تحدي المعلومات 💡</h2>
-    <p id="question">ما هو أسرع حيوان في العالم؟</p>
-    <button class="menu-btn" onclick="checkQuiz('الفهد')">الفهد</button>
-    <button class="menu-btn" onclick="checkQuiz('الأسد')">الأسد</button>
-    <p id="quizMsg"></p>
-</div>
+    <div id="game-screen">
+        <button class="close-btn" onclick="closeGame()">❌ إغلاق والعودة للقائمة</button>
+        <iframe id="game-frame" src=""></iframe>
+    </div>
 
-<div class="footer">
-    تمت البرمجة بكل حب بواسطة <br>
-    <strong>💎 المبرمجة عبير حلمي 💎</strong>
-</div>
+    <script>
+        function openGame(url) {
+            document.getElementById('game-frame').src = url;
+            document.getElementById('game-screen').style.display = 'flex';
+        }
 
-<script>
-    // تنقل بين الألعاب
-    function showGame(id) {
-        document.querySelectorAll('.game-container').forEach(g => g.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-    }
-
-    // منطق لعبة التخمين
-    let secret = Math.floor(Math.random() * 50) + 1;
-    function guessGame() {
-        let val = document.getElementById('guessInput').value;
-        let msg = document.getElementById('guessMsg');
-        if(val == secret) { msg.innerHTML = "🎉 صح! برافو عليكي"; msg.style.color="green"; }
-        else if(val > secret) { msg.innerHTML = "📈 الرقم أصغر من كدة"; msg.style.color="red"; }
-        else { msg.innerHTML = "📉 الرقم أكبر من كدة"; msg.style.color="blue"; }
-    }
-
-    // منطق لعبة السرعة
-    let score = 0;
-    function startClickGame() {
-        score = 0;
-        document.getElementById('score').innerText = score;
-        let area = document.getElementById('game-area');
-        area.innerHTML = "";
-        
-        let gameInterval = setInterval(() => {
-            let target = document.createElement('div');
-            target.className = "target";
-            target.innerHTML = "💎";
-            target.style.top = Math.random() * 150 + "px";
-            target.style.left = Math.random() * (area.clientWidth - 50) + "px";
-            
-            target.onclick = () => {
-                score++;
-                document.getElementById('score').innerText = score;
-                target.remove();
-            };
-            
-            area.appendChild(target);
-            setTimeout(() => target.remove(), 1000);
-        }, 800);
-        
-        setTimeout(() => { clearInterval(gameInterval); alert("خلص الوقت! نتيجتك: " + score); }, 15000);
-    }
-
-    // منطق الأسئلة
-    function checkQuiz(ans) {
-        let msg = document.getElementById('quizMsg');
-        if(ans === 'الفهد') { msg.innerHTML = "إجابة عبقرية! ✅"; msg.style.color="green"; }
-        else { msg.innerHTML = "حاولي تاني يا بطلة ❌"; msg.style.color="red"; }
-    }
-</script>
+        function closeGame() {
+            document.getElementById('game-screen').style.display = 'none';
+            document.getElementById('game-frame').src = '';
+        }
+    </script>
 
 </body>
 </html>
