@@ -5,59 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بوابة الألعاب العالمية</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #0b0e14; color: white; margin: 0; padding: 20px; }
-        h1 { text-align: center; color: #ff4757; font-size: 2.5em; text-shadow: 2px 2px #000; }
-        
-        /* تصميم شبكة الألعاب */
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-
-        /* تصميم كرت اللعبة */
-        .game-card {
-            background: #1e272e;
-            border-radius: 15px;
-            overflow: hidden;
-            transition: 0.3s;
-            cursor: pointer;
-            border: 2px solid transparent;
-            text-align: center;
-        }
-
-        .game-card:hover {
-            transform: scale(1.08);
-            border-color: #ff4757;
-            box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
-        }
-
-        .game-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .game-card h3 {
-            margin: 10px 0;
-            font-size: 1.1em;
-        }
-
-        /* حاوية اللعبة عند الفتح */
-        #game-screen {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        iframe { width: 80%; height: 80%; border: 5px solid #fff; border-radius: 10px; }
-        .close-btn { margin-bottom: 10px; padding: 10px 20px; background: #ff4757; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #0b0e14; color: white; margin: 0; padding: 20px; }
+        h1 { text-align: center; color: #ff4757; margin-bottom: 30px; }
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .game-card { background: #1e272e; border-radius: 15px; overflow: hidden; cursor: pointer; transition: 0.3s; border: 2px solid transparent; text-align: center; padding-bottom: 10px; }
+        .game-card:hover { transform: translateY(-10px); border-color: #ff4757; }
+        .game-card img { width: 100%; height: 140px; object-fit: cover; }
+        #game-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; flex-direction: column; }
+        iframe { width: 100%; flex-grow: 1; border: none; }
+        .close-btn { padding: 15px; background: #ff4757; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 1.1em; }
     </style>
 </head>
 <body>
@@ -65,29 +21,29 @@
     <h1>🎮 Game Universe | عالم الألعاب 🎮</h1>
 
     <div class="game-grid">
+        <div class="game-card" onclick="openGame('https://play2048.co/')">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/2048_logo.svg/1200px-2048_logo.svg.png" alt="2048">
+            <h3>لعبة الأرقام 2048</h3>
+        </div>
+
         <div class="game-card" onclick="openGame('https://www.google.com/logos/2010/pacman10-i.html')">
-            <img src="https://logodix.com/logo/18526.png" alt="Pacman">
-            <h3>باك مان الكلاسيكية</h3>
+            <img src="https://www.google.com/logos/2010/pacman10-hp.png" alt="Pacman">
+            <h3>باك مان الأصلية</h3>
         </div>
 
         <div class="game-card" onclick="openGame('https://playtictactoe.org/')">
-            <img src="https://play-lh.googleusercontent.com/399008889898.png" alt="XO">
-            <h3>لعبة التحدي XO</h3>
+            <img src="https://m.media-amazon.com/images/I/41D9K8C-oFL.png" alt="XO">
+            <h3>تحدي XO</h3>
         </div>
 
-        <div class="game-card" onclick="openGame('https://poki.com/en/g/temple-run-2')">
-            <img src="https://play-lh.googleusercontent.com/9998888.png" alt="Temple Run">
-            <h3>تمبل رن (Poki)</h3>
-        </div>
-
-        <div class="game-card" onclick="openGame('https://slither.io/')">
-            <img src="https://play-lh.googleusercontent.com/111222333.png" alt="Slither">
-            <h3>لعبة الثعبان Slither</h3>
+        <div class="game-card" onclick="openGame('https://www.boring.games/game/piano-tiles-2')">
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple113/v4/0d/9e/7b/0d9e7b23-26f5-062e-5062-870678a63583/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/256x256bb.jpg" alt="Piano">
+            <h3>بيانو تايليز</h3>
         </div>
     </div>
 
     <div id="game-screen">
-        <button class="close-btn" onclick="closeGame()">❌ إغلاق والعودة للقائمة</button>
+        <button class="close-btn" onclick="closeGame()">❌ إغلاق اللعبة والعودة للقائمة</button>
         <iframe id="game-frame" src=""></iframe>
     </div>
 
@@ -96,7 +52,6 @@
             document.getElementById('game-frame').src = url;
             document.getElementById('game-screen').style.display = 'flex';
         }
-
         function closeGame() {
             document.getElementById('game-screen').style.display = 'none';
             document.getElementById('game-frame').src = '';
