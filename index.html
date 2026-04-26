@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز ألعاب المبرمجة عبير</title>
+    <style>
+        :root { --main-color: #ff4757; --sec-color: #2f3542; }
+        body { font-family: 'Cairo', sans-serif; background: #f1f2f6; margin: 0; padding: 20px; text-align: center; }
+        .header { background: var(--main-color); color: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .game-container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 20px; display: none; border: 2px solid #ddd; }
+        .active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .menu-btn { padding: 12px 25px; margin: 5px; border: none; border-radius: 10px; cursor: pointer; background: var(--sec-color); color: white; font-weight: bold; transition: 0.3s; }
+        .menu-btn:hover { background: var(--main-color); transform: translateY(-3px); }
+        
+        input, button { padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin: 10px; font-family: inherit; }
+        .play-btn { background: #2ed573; color: white; border: none; font-weight: bold; cursor: pointer; }
+        
+        /* لعبة اضرب الرموز */
+        #game-area { height: 200px; position: relative; background: #dfe4ea; border-radius: 15px; overflow: hidden; cursor: crosshair; }
+        .target { font-size: 40px; position: absolute; cursor: pointer; user-select: none; }
+        
+        .footer { margin-top: 40px; color: #777; border-top: 1px solid #ddd; padding-top: 20px; }
+        .footer strong { color: var(--main-color); font-size: 1.2em; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🎮 مركز ألعاب عبير حلمي 🎮</h1>
+    <p>اختاري اللعبة اللي تحبيها وابدأي التحدي!</p>
+</div>
+
+<div class="nav">
+    <button class="menu-btn" onclick="showGame('guess')">🎲 تخمين الرقم</button>
+    <button class="menu-btn" onclick="showGame('clicker')">⚡ سرعة النقرات</button>
+    <button class="menu-btn" onclick="showGame('quiz')">💡 سؤال وجواب</button>
+</div>
+
+<hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
+
+<div id="guess" class="game-container active">
+    <h2>تخمين الرقم السري</h2>
+    <p>فكرت في رقم من 1 لـ 50.. هو كام؟</p>
+    <input type="number" id="guessInput" placeholder="اكتبي الرقم">
+    <button class="play-btn" onclick="guessGame()">تحقق</button>
+    <p id="guessMsg"></p>
+</div>
+
+<div id="clicker" class="game-container">
+    <h2>لعبة سرعة الرد ⚡</h2>
+    <p>اضربي الرموز اللي بتظهر بسرعة! النتيجة: <span id="score">0</span></p>
+    <button class="play-btn" onclick="startClickGame()">ابدأ اللعب</button>
+    <div id="game-area"></div>
+</div>
+
+<div id="quiz" class="game-container">
+    <h2>تحدي المعلومات 💡</h2>
+    <p id="question">ما هو أسرع حيوان في العالم؟</p>
+    <button class="menu-btn" onclick="checkQuiz('الفهد')">الفهد</button>
+    <button class="menu-btn" onclick="checkQuiz('الأسد')">الأسد</button>
+    <p id="quizMsg"></p>
+</div>
+
+<div class="footer">
+    تمت البرمجة بكل حب بواسطة <br>
+    <strong>💎 المبرمجة عبير حلمي 💎</strong>
+</div>
+
+<script>
+    // تنقل بين الألعاب
+    function showGame(id) {
+        document.querySelectorAll('.game-container').forEach(g => g.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    // منطق لعبة التخمين
+    let secret = Math.floor(Math.random() * 50) + 1;
+    function guessGame() {
+        let val = document.getElementById('guessInput').value;
+        let msg = document.getElementById('guessMsg');
+        if(val == secret) { msg.innerHTML = "🎉 صح! برافو عليكي"; msg.style.color="green"; }
+        else if(val > secret) { msg.innerHTML = "📈 الرقم أصغر من كدة"; msg.style.color="red"; }
+        else { msg.innerHTML = "📉 الرقم أكبر من كدة"; msg.style.color="blue"; }
+    }
+
+    // منطق لعبة السرعة
+    let score = 0;
+    function startClickGame() {
+        score = 0;
+        document.getElementById('score').innerText = score;
+        let area = document.getElementById('game-area');
+        area.innerHTML = "";
+        
+        let gameInterval = setInterval(() => {
+            let target = document.createElement('div');
+            target.className = "target";
+            target.innerHTML = "💎";
+            target.style.top = Math.random() * 150 + "px";
+            target.style.left = Math.random() * (area.clientWidth - 50) + "px";
+            
+            target.onclick = () => {
+                score++;
+                document.getElementById('score').innerText = score;
+                target.remove();
+            };
+            
+            area.appendChild(target);
+            setTimeout(() => target.remove(), 1000);
+        }, 800);
+        
+        setTimeout(() => { clearInterval(gameInterval); alert("خلص الوقت! نتيجتك: " + score); }, 15000);
+    }
+
+    // منطق الأسئلة
+    function checkQuiz(ans) {
+        let msg = document.getElementById('quizMsg');
+        if(ans === 'الفهد') { msg.innerHTML = "إجابة عبقرية! ✅"; msg.style.color="green"; }
+        else { msg.innerHTML = "حاولي تاني يا بطلة ❌"; msg.style.color="red"; }
+    }
+</script>
+
+</body>
+</html>
