@@ -5,70 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Universe | عالم الألعاب</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #0b0e14; color: white; margin: 0; padding: 20px; }
-        h1 { text-align: center; color: #ff4757; margin-bottom: 30px; text-shadow: 0 0 10px rgba(255, 71, 87, 0.5); }
-        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-        .game-card { background: #1e272e; border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; border: 2px solid transparent; text-align: center; }
-        .game-card:hover { transform: scale(1.05); border-color: #ff4757; }
-        .game-card img { width: 100%; height: 110px; object-fit: cover; }
-        .game-card h3 { font-size: 0.9em; margin: 10px 5px; }
-        #game-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; flex-direction: column; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: white; margin: 0; padding: 20px; }
+        h1 { text-align: center; color: #38bdf8; font-size: 2.2em; margin-bottom: 30px; text-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+        
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        
+        .game-card { 
+            background: #1e293b; border-radius: 20px; padding: 20px 10px; cursor: pointer; 
+            transition: 0.3s; border: 1px solid #334155; text-align: center; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-card:hover { transform: translateY(-8px); border-color: #38bdf8; background: #334155; }
+        
+        .game-icon { font-size: 50px; margin-bottom: 10px; display: block; }
+        .game-card h3 { font-size: 1em; margin: 0; color: #f1f5f9; }
+
+        #game-screen { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #000; z-index: 1000; flex-direction: column; 
+        }
+        
         iframe { width: 100%; flex-grow: 1; border: none; background: white; }
-        .close-btn { padding: 15px; background: #ff4757; color: white; border: none; cursor: pointer; font-weight: bold; }
+        
+        .close-btn { 
+            padding: 15px; background: #ef4444; color: white; border: none; 
+            cursor: pointer; font-weight: bold; font-size: 1.1em; 
+        }
     </style>
 </head>
 <body>
 
-    <h1>🎮 Game Universe | عالم الألعاب 🎮</h1>
+    <h1>🎮 Game Universe | عالم الألعاب </h1>
 
     <div class="game-grid">
-        <div class="game-card" onclick="openGame('https://www.google.com/logos/2010/pacman10-i.html')">
-            <img src="https://www.google.com/logos/2010/pacman10-hp.png">
-            <h3>باك مان</h3>
-        </div>
-        <div class="game-card" onclick="openGame('https://playtictactoe.org/')">
-            <img src="https://cdn-icons-png.flaticon.com/512/566/566294.png">
-            <h3>تحدي XO</h3>
-        </div>
         <div class="game-card" onclick="openGame('https://play2048.co/')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/2048_logo.svg/200px-2048_logo.svg.png">
+            <span class="game-icon">🔢</span>
             <h3>لعبة 2048</h3>
         </div>
-        <div class="game-card" onclick="openGame('https://www.onlinetcoloring.com/coloring-pages/mandala/')">
-            <img src="https://cdn-icons-png.flaticon.com/512/2970/2970785.png">
-            <h3>لعبة تلوين</h3>
-        </div>
+
         <div class="game-card" onclick="openGame('https://www.google.com/logos/2010/pacman10-i.html')">
-            <img src="https://cdn-icons-png.flaticon.com/512/528/528076.png">
-            <h3>الثعبان الجائع</h3>
+            <span class="game-icon">🟡</span>
+            <h3>باك مان</h3>
         </div>
+
+        <div class="game-card" onclick="openGame('https://playtictactoe.org/')">
+            <span class="game-icon">❌</span>
+            <h3>تحدي XO</h3>
+        </div>
+
         <div class="game-card" onclick="openGame('https://muro.io/')">
-            <img src="https://cdn-icons-png.flaticon.com/512/3259/3259441.png">
+            <span class="game-icon">🎹</span>
             <h3>عزف البيانو</h3>
         </div>
-        <div class="game-card" onclick="openGame('https://sudoku.com/')">
-            <img src="https://cdn-icons-png.flaticon.com/512/2436/2436636.png">
-            <h3>سودوكو ذكاء</h3>
-        </div>
+
         <div class="game-card" onclick="openGame('https://chromedino.com/')">
-            <img src="https://cdn-icons-png.flaticon.com/512/2790/2790371.png">
+            <span class="game-icon">🦖</span>
             <h3>ديناصور القفز</h3>
         </div>
-        <div class="game-card" onclick="openGame('https://tetris.com/play-tetris')">
-            <img src="https://cdn-icons-png.flaticon.com/512/566/566312.png">
-            <h3>تيتريس مكعبات</h3>
+
+        <div class="game-card" onclick="openGame('https://www.onlinetcoloring.com/coloring-pages/mandala/')">
+            <span class="game-icon">🎨</span>
+            <h3>عالم التلوين</h3>
         </div>
-        <div class="game-card" onclick="openGame('https://lichess.org/training')">
-            <img src="https://cdn-icons-png.flaticon.com/512/3014/3014131.png">
-            <h3>تدريب شطرنج</h3>
+
+        <div class="game-card" onclick="openGame('https://m.girlsgogames.com/games/cooking')">
+            <span class="game-icon">🍳</span>
+            <h3>مطبخ البنات</h3>
         </div>
-        <div class="game-card" onclick="openGame('https://www.game-game.com/games/cooking/')">
-            <img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png">
-            <h3>ألعاب طبخ</h3>
-        </div>
-        <div class="game-card" onclick="openGame('https://www.dressup.com/')">
-            <img src="https://cdn-icons-png.flaticon.com/512/194/194311.png">
-            <h3>عالم التجميل</h3>
+
+        <div class="game-card" onclick="openGame('https://m.girlsgogames.com/games/dress_up')">
+            <span class="game-icon">👗</span>
+            <h3>تلبيس ومكياج</h3>
         </div>
     </div>
 
